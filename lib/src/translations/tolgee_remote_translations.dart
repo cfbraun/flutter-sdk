@@ -55,6 +55,7 @@ class TolgeeRemoteTranslations extends ChangeNotifier
     }
 
     _currentLanguage = locale;
+    final languages = _projectLanguages.keys.join(",");
     TolgeeTranslationsResponse? translations = await TolgeeApi.getTranslations(
       config: config,
       currentLanguage: languages,
