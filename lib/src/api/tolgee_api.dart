@@ -116,18 +116,23 @@ class TolgeeApi {
     required UpdateTranslationsRequest request,
   }) async {
     final body = jsonEncode(request.toJson());
+    // Ensure UTF-8 encoding for the request body
+    final utf8EncodedBody = utf8.encode(body);
 
     final response = await post(
       Uri.parse('${config.apiUrl}/projects/translations'),
       headers: {
         'X-Api-Key': config.apiKey,
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json; charset=utf-8',
       },
-      body: body,
+      body: utf8EncodedBody,
     );
+
+    // Ensure UTF-8 decoding for the response
+    final utf8DecodedResponse = utf8.decode(response.bodyBytes);
     final updateTranslationsResponse =
         UpdateTranslationsResponse.fromJsonString(
-      response.body,
+      utf8DecodedResponse,
     );
     return updateTranslationsResponse.model;
   }
