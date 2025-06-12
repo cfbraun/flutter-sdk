@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:tolgee/src/api/models/tolgee_key_model.dart';
@@ -111,8 +112,8 @@ class TolgeeStaticTranslations implements TolgeeTranslations {
     }
 
     return _translations
-            .firstWhere((element) => element.keyName == key)
-            .translations[languageCode]
+        .firstWhereOrNull((element) => element.keyName == key)
+        ?.translations[languageCode]
             ?.text;
   }
 
